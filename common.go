@@ -1,12 +1,12 @@
 package common
 
 import (
-	"simplex/node"
-	"github.com/intdxdt/rtree"
 	"sort"
 	"github.com/intdxdt/geom"
-	"simplex/pln"
-	"simplex/rng"
+	"github.com/intdxdt/rtree"
+	"github.com/TopoSimplify/pln"
+	"github.com/TopoSimplify/rng"
+	"github.com/TopoSimplify/node"
 )
 
 func SortInts(iter []int) []int {
