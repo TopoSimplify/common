@@ -10,8 +10,8 @@ import (
 )
 
 func SortInts(iter []int) []int {
-    sort.Ints(iter)
-    return iter
+	sort.Ints(iter)
+	return iter
 }
 
 //Convert slice of interface to ints
@@ -23,56 +23,43 @@ func AsInts(iter []interface{}) []int {
 	return ints
 }
 
-//node.Nodes from Rtree boxes
-func NodesFromBoxes(iter []rtree.BoxObj) []*node.Node {
-	var nodes = make([]*node.Node, len(iter))
-	for i, h := range iter {
-		nodes[i] = h.(*node.Node)
-	}
-	return nodes
-}
-
 //node.Nodes from Rtree nodes
-func NodesFromRtreeNodes(iter []*rtree.Node) []*node.Node {
-	var nodes = make([]*node.Node, len(iter))
-	for i, h := range iter {
-		nodes[i] = h.GetItem().(*node.Node)
+func NodesFromObjects(iter []rtree.Obj) []*node.Node {
+	var nodes = make([]*node.Node, 0, len(iter))
+	for i := range iter {
+		nodes = append(nodes, iter[i].Object.(*node.Node))
 	}
 	return nodes
 }
 
 //hull geom
-func HullGeom(coords []*geom.Point) geom.Geometry {
+func HullGeom(coords []geom.Point) geom.Geometry {
 	var g geom.Geometry
-
 	if len(coords) > 2 {
 		g = geom.NewPolygon(coords)
 	} else if len(coords) == 2 {
 		g = geom.NewLineString(coords)
 	} else {
-		g = coords[0].Clone()
+		var pt = coords[0]
+		g = &pt
 	}
 	return g
 }
 
-func LinearCoords(wkt string) []*geom.Point{
+func LinearCoords(wkt string) []geom.Point {
 	return geom.NewLineStringFromWKT(wkt).Coordinates()
 }
 
 func CreateHulls(indxs [][]int, coords []*geom.Point) []*node.Node {
-	poly := pln.New(coords)
-	hulls := make([]*node.Node, 0)
+	var poly    = pln.New(coords)
+	var hulls   = make([]*node.Node, 0)
 	for _, o := range indxs {
 		hulls = append(hulls, newNodeFromPolyline(poly, rng.NewRange(o[0], o[1]), HullGeom))
 	}
 	return hulls
 }
 
-
-
 //New Node
 func newNodeFromPolyline(polyline *pln.Polyline, rng *rng.Range, gfn geom.GeometryFn) *node.Node {
 	return node.New(polyline.SubCoordinates(rng), rng, gfn)
 }
-
-
