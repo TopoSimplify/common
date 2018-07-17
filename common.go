@@ -50,16 +50,16 @@ func LinearCoords(wkt string) []geom.Point {
 	return geom.NewLineStringFromWKT(wkt).Coordinates()
 }
 
-func CreateHulls(indxs [][]int, coords []*geom.Point) []*node.Node {
+func CreateHulls(indxs [][]int, coords []geom.Point) []*node.Node {
 	var poly    = pln.New(coords)
 	var hulls   = make([]*node.Node, 0)
 	for _, o := range indxs {
-		hulls = append(hulls, newNodeFromPolyline(poly, rng.NewRange(o[0], o[1]), HullGeom))
+		hulls = append(hulls, newNodeFromPolyline(poly, rng.Range(o[0], o[1]), HullGeom))
 	}
 	return hulls
 }
 
 //New Node
-func newNodeFromPolyline(polyline *pln.Polyline, rng *rng.Range, gfn geom.GeometryFn) *node.Node {
-	return node.New(polyline.SubCoordinates(rng), rng, gfn)
+func newNodeFromPolyline(polyline *pln.Polyline, rng rng.Rng, geomFn geom.GeometryFn) *node.Node {
+	return node.New(polyline.SubCoordinates(rng), rng, geomFn)
 }
