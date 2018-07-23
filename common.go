@@ -33,14 +33,14 @@ func NodesFromObjects(iter []rtree.Obj) []*node.Node {
 }
 
 //hull geom
-func HullGeom(coords []geom.Point) geom.Geometry {
+func HullGeom(coordinates []geom.Point) geom.Geometry {
 	var g geom.Geometry
-	if len(coords) > 2 {
-		g = geom.NewPolygon(coords)
-	} else if len(coords) == 2 {
-		g = geom.NewLineString(coords)
+	if len(coordinates) > 2 {
+		g = geom.NewPolygon(coordinates)
+	} else if len(coordinates) == 2 {
+		g = geom.NewLineString(coordinates)
 	} else {
-		var pt = coords[0]
+		var pt = coordinates[0]
 		g = &pt
 	}
 	return g
