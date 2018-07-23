@@ -24,7 +24,7 @@ func AsInts(iter []interface{}) []int {
 }
 
 //node.Nodes from Rtree nodes
-func NodesFromObjects(iter []rtree.Obj) []*node.Node {
+func NodesFromObjects(iter []*rtree.Obj) []*node.Node {
 	var nodes = make([]*node.Node, 0, len(iter))
 	for i := range iter {
 		nodes = append(nodes, iter[i].Object.(*node.Node))
