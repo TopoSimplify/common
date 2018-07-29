@@ -3,7 +3,7 @@ package common
 import (
 	"sort"
 	"github.com/intdxdt/geom"
-		"github.com/TopoSimplify/pln"
+	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/rng"
 	"github.com/TopoSimplify/node"
 	"github.com/intdxdt/iter"
