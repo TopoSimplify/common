@@ -24,24 +24,23 @@ func AsInts(iter []interface{}) []int {
 }
 
 //hull geom
-func HullGeom(coordinates []geom.Point) geom.Geometry {
+func HullGeom(coordinates geom.Coords) geom.Geometry {
 	var g geom.Geometry
-	if len(coordinates) > 2 {
+	if coordinates.Len() > 2 {
 		g = geom.NewPolygon(coordinates)
-	} else if len(coordinates) == 2 {
+	} else if coordinates.Len() == 2 {
 		g = geom.NewLineString(coordinates)
 	} else {
-		var pt = coordinates[0]
-		g = &pt
+		g = coordinates.Pt(0)
 	}
 	return g
 }
 
-func LinearCoords(wkt string) []geom.Point {
-	return geom.NewLineStringFromWKT(wkt).Coordinates()
+func LinearCoords(wkt string) geom.Coords {
+	return geom.NewLineStringFromWKT(wkt).Coordinates
 }
 
-func CreateHulls(id *iter.Igen, indices [][]int, coords []geom.Point) []node.Node {
+func CreateHulls(id *iter.Igen, indices [][]int, coords geom.Coords) []node.Node {
 	var poly = pln.New(coords)
 	var hulls = make([]node.Node, 0)
 	for _, o := range indices {
