@@ -24,7 +24,7 @@ func AsInts(iter []interface{}) []int {
 }
 
 //hull geom
-func HullGeom(coordinates geom.Coords) geom.Geometry {
+func Geometry(coordinates geom.Coords) geom.Geometry {
 	var g geom.Geometry
 	if coordinates.Len() > 2 {
 		g = geom.NewPolygon(coordinates)
@@ -44,7 +44,7 @@ func CreateHulls(id *iter.Igen, indices [][]int, coords geom.Coords) []node.Node
 	var poly = pln.New(coords)
 	var hulls = make([]node.Node, 0)
 	for _, o := range indices {
-		hulls = append(hulls, nodeFromPolyline(id, poly, rng.Range(o[0], o[1]), HullGeom))
+		hulls = append(hulls, nodeFromPolyline(id, poly, rng.Range(o[0], o[1]), Geometry))
 	}
 	return hulls
 }
