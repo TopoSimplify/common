@@ -50,6 +50,8 @@ func CreateHulls(id *iter.Igen, indices [][]int, coords geom.Coords) []node.Node
 }
 
 //New Node
-func nodeFromPolyline(id *iter.Igen, polyline *pln.Polyline, rng rng.Rng, geomFn geom.GeometryFn) node.Node {
+func nodeFromPolyline(
+	id *iter.Igen, polyline *pln.Polyline,
+	rng rng.Rng, geomFn func(geom.Coords)geom.Geometry) node.Node {
 	return node.CreateNode(id, polyline.SubCoordinates(rng), rng, geomFn)
 }
