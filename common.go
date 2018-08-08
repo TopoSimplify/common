@@ -41,7 +41,7 @@ func LinearCoords(wkt string) geom.Coords {
 }
 
 func CreateHulls(id *iter.Igen, indices [][]int, coords geom.Coords) []node.Node {
-	var poly = pln.New(coords)
+	var poly = pln.CreatePolyline(coords)
 	var hulls = make([]node.Node, 0)
 	for _, o := range indices {
 		hulls = append(hulls, nodeFromPolyline(id, poly, rng.Range(o[0], o[1]), Geometry))
@@ -51,7 +51,7 @@ func CreateHulls(id *iter.Igen, indices [][]int, coords geom.Coords) []node.Node
 
 //New Node
 func nodeFromPolyline(
-	id *iter.Igen, polyline *pln.Polyline,
+	id *iter.Igen, polyline pln.Polyline,
 	rng rng.Rng, geomFn func(geom.Coords)geom.Geometry) node.Node {
 	return node.CreateNode(id, polyline.SubCoordinates(rng), rng, geomFn)
 }
