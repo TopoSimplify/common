@@ -7,6 +7,7 @@ import (
 	"github.com/TopoSimplify/rng"
 	"github.com/TopoSimplify/node"
 	"github.com/intdxdt/iter"
+	"github.com/TopoSimplify/lnr"
 )
 
 func SortInts(iter []int) []int {
@@ -40,18 +41,23 @@ func LinearCoords(wkt string) geom.Coords {
 	return geom.NewLineStringFromWKT(wkt).Coordinates
 }
 
-func CreateHulls(id *iter.Igen, indices [][]int, coords geom.Coords) []node.Node {
+func CreateHulls(id *iter.Igen, indices [][]int, coords geom.Coords, instance lnr.Linegen) []node.Node {
 	var poly = pln.CreatePolyline(coords)
-	var hulls = make([]node.Node, 0)
+	var hulls []node.Node
 	for _, o := range indices {
-		hulls = append(hulls, nodeFromPolyline(id, poly, rng.Range(o[0], o[1]), Geometry))
+		hulls = append(hulls, nodeFromPolyline(
+			id, poly, rng.Range(o[0], o[1]), Geometry, instance,
+		))
 	}
 	return hulls
 }
 
 //New Node
 func nodeFromPolyline(
-	id *iter.Igen, polyline pln.Polyline,
-	rng rng.Rng, geomFn func(geom.Coords)geom.Geometry) node.Node {
-	return node.CreateNode(id, polyline.SubCoordinates(rng), rng, geomFn)
+	id *iter.Igen,
+	polyline pln.Polyline,
+	rng rng.Rng,
+	geomFn func(geom.Coords) geom.Geometry,
+	instance lnr.Linegen) node.Node {
+	return node.CreateNode(id, polyline.SubCoordinates(rng), rng, geomFn, instance)
 }
