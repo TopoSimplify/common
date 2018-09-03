@@ -15,14 +15,6 @@ func SortInts(iter []int) []int {
 	return iter
 }
 
-//Convert slice of interface to ints
-func AsInts(iter []interface{}) []int {
-	var ints = make([]int, len(iter))
-	for i := range iter {
-		ints[i] = iter[i].(int)
-	}
-	return ints
-}
 
 //hull geom
 func Geometry(coordinates geom.Coords) geom.Geometry {
@@ -53,11 +45,7 @@ func CreateHulls(id *iter.Igen, indices [][]int, coords geom.Coords, instance ln
 }
 
 //New Node
-func nodeFromPolyline(
-	id *iter.Igen,
-	polyline pln.Polyline,
-	rng rng.Rng,
-	geomFn func(geom.Coords) geom.Geometry,
-	instance lnr.Linegen) node.Node {
+func nodeFromPolyline(id *iter.Igen,
+	polyline pln.Polyline, rng rng.Rng, geomFn func(geom.Coords) geom.Geometry, instance lnr.Linegen) node.Node {
 	return node.CreateNode(id, polyline.SubCoordinates(rng), rng, geomFn, instance)
 }
