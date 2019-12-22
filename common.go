@@ -1,13 +1,13 @@
 package common
 
 import (
-	"sort"
-	"github.com/intdxdt/geom"
+	"github.com/TopoSimplify/lnr"
+	"github.com/TopoSimplify/node"
 	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/rng"
-	"github.com/TopoSimplify/node"
+	"github.com/intdxdt/geom"
 	"github.com/intdxdt/iter"
-	"github.com/TopoSimplify/lnr"
+	"sort"
 )
 
 func SortInts(iter []int) []int {
