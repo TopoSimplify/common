@@ -1,10 +1,10 @@
 package common
 
 import (
-	"time"
-	"testing"
-	"github.com/intdxdt/geom"
 	"github.com/franela/goblin"
+	"github.com/intdxdt/geom"
+	"testing"
+	"time"
 )
 
 func TestCommon(t *testing.T) {
